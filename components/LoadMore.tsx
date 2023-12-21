@@ -8,11 +8,13 @@ import AnimeCard, { AnimeProp } from "./AnimeCard";
 
 // react-intersection-observer
 
-let page = 2; // Declring teh page number here in a variable instead of a state is a much simpler solution
+let page = 2; // Declaring the page number here in a variable instead of a state is a much simpler solution
+
+export type AnimeCard = JSX.Element; // This is the type of the AnimeCard component
 
 function LoadMore() {
   const { ref, inView } = useInView({});
-  const [data, setData] = useState<AnimeProp[]>([]); // An array of AnimeProps
+  const [data, setData] = useState<AnimeCard[]>([]); // An array of Anime Cards, as the server acion maps over the data, and returns the data in the form of JSX elements, instead of just the data
 
   useEffect(() => {
     if (inView) {
@@ -27,9 +29,7 @@ function LoadMore() {
     <>
       {/* This section is for all teh subsequent pages from page 1 */}
       <section className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
-        {data.map((item: AnimeProp, index: number) => (
-          <AnimeCard key={item.id} anime={item} index={index} />
-        ))}
+        {data}
       </section>
       <section className="flex justify-center items-center w-full">
         <div ref={ref}>
